@@ -46,6 +46,7 @@ resource "aws_iam_instance_profile" "instance_profile" {
   role = aws_iam_role.instance_role.name
 }
 
+# Use the standard Amazon SSM policy to let the instances accept SSM sessions
 resource "aws_iam_role_policy_attachment" "ssm-attach" {
   role       = aws_iam_role.instance_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"

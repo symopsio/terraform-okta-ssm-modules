@@ -1,9 +1,13 @@
-# ssm-instance
+# terraform-okta-ssm-demo
 
-Creates an Okta AWS App and an EC2 instance that you can use to demo AWS Systems Manager Session Manager.
+Creates an Okta AWS App and an EC2 instance that you can use to demo AWS Systems Manager [Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html).
 
 * Users authenticate with Okta and then are able to gain SSH access to the instance
 * The instance has no EC2 key and the security group has no ingress rules and only http/https egress rules, but yet we are able to get in to it. Yay!
+
+## Instance Profile Configuration
+
+This demo uses the [default Amazon managed policy](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-instance-profile.html) to give the demo EC2 instance the ability to accept SSM sessions.
 
 ## SSM Access
 
