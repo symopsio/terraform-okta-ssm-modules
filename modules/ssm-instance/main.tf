@@ -29,6 +29,7 @@ resource "aws_instance" "ssm_instance" {
   instance_type          = "t2.micro"
   monitoring             = true
   subnet_id              = data.aws_subnet.selected.id
+  user_data              = var.user_data
   vpc_security_group_ids = [aws_security_group.sg.id]
 
   tags = {

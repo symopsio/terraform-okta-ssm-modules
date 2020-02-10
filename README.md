@@ -7,7 +7,7 @@ Creates an Okta AWS App and an EC2 instance that you can use to demo AWS Systems
 
 ## Instance Profile Configuration
 
-This demo uses the [default Amazon managed policy](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-instance-profile.html) to give the demo EC2 instance the ability to accept SSM sessions.
+Uses the [default Amazon managed policy](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-instance-profile.html) to give the demo EC2 instance the ability to accept SSM sessions.
 
 ## SSM Access
 

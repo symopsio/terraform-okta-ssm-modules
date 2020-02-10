@@ -12,6 +12,7 @@ provider "local" {
 }
 
 provider "okta" {
+  version   = "~> 3.0"
   org_name  = var.okta_org_name
   base_url  = "okta.com"
 }
@@ -19,23 +20,13 @@ provider "okta" {
 module "ssm_instance" {
   source    = "./modules/ssm-instance"
   subnet_id = var.aws_subnet_id
+  user_data = var.user_data
 }
 
 module "okta_iam" {
   source        = "./modules/okta-iam"
-
   okta_app_name = var.okta_app_name
   aws_role_name = var.aws_role_name
-}
-
-# Create a user that will be able to SSM in to the app
-resource "okta_user" "example_user" {
-  first_name        = "ExampleFirst"
-  last_name         = "ExampleLast"
-  login             = var.okta_user_email
-  email             = var.okta_user_email
-  status            = "ACTIVE"
-  group_memberships = [ module.okta_iam.okta_group_id ]
 }
 
 # Attach the SSM access policy to the role that the Okta app logs in with
