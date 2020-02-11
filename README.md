@@ -5,6 +5,8 @@ Creates an Okta AWS App and an EC2 instance that you can use to demo AWS Systems
 * Users authenticate with Okta and then are able to gain SSH access to the instance
 * The instance has no EC2 key and the security group has no ingress rules and only http/https egress rules, but yet we are able to get in to it. Yay!
 
+![Session Manager Screenshot](docs/SSMScreenshot.png "Sesssion Manager Screenshot")
+
 ## Instance Profile Configuration
 
 Uses the [default Amazon managed policy](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-instance-profile.html) to give the demo EC2 instance the ability to accept SSM sessions.
