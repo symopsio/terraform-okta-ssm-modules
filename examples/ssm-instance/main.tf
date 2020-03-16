@@ -26,4 +26,3 @@ data "aws_subnet" "selected" {
   default_for_az    = true
   vpc_id            = data.aws_vpc.default.id
 }
-

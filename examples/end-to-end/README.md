@@ -1,6 +1,6 @@
-# okta-iam example
+# end-to-end
 
-Creates an Okta app with an example user that can log in with administrator access
+Creates a user along with the Okta app and instance for an end to end demo
 
 ## Required Okta Configuration
 

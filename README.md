@@ -1,30 +1,26 @@
-# terraform-okta-ssm-demo
+# terraform-okta-ssm-modules
 
-Creates an Okta AWS App and an EC2 instance that you can use to demo AWS Systems Manager [Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html).
+Terraform modules that help you explore Okta and AWS Session Manager integrations.
 
-* Users authenticate with Okta and then are able to gain SSH access to the instance
-* The instance has no EC2 key and the security group has no ingress rules and only http/https egress rules, but yet we are able to get in to it. Yay!
+## About session manager
 
-![Session Manager Screenshot](docs/SSMScreenshot.png "Sesssion Manager Screenshot")
+For the details on what makes Session Manager so cool, check out [AWS Session Manager: less infrastructure, more features](docs/AWSSessionManagerLessInfrastructureMoreFeatures.md).
 
-## Instance Profile Configuration
+## End to end example
 
-Uses the [default Amazon managed policy](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-instance-profile.html) to give the demo EC2 instance the ability to accept SSM sessions.
+The `examples` folder includes an end-to-end configuration for people that want to spin something up quickly. The end-to-end example will provision:
 
-## SSM Access
+1. An Okta User that can log in to AWS with permissions to run Session Manager sessions.
+2. An EC2 instance that is set up with the right permissions for Session Manager and is tagged to let the Okta User access it.
 
-Currently SSM access through the AWS console only is supported (CLI instructions/setup coming soon).
+You'll need a free Okta developer account and an AWS account where you have administrative privileges for the example to work.
 
-## Okta Configuration
+## About the modules
 
-### Authentication
+* `ssm_instance`: Defines an EC2 instance that can be accessed with Session Manager
+* `cwagent`: Configures the CloudWatch Logs agent on an EC2 instance to enable logging of Session Manager sessions
+* `okta-iam`: Enable federated login to AWS via Okta groups
 
-Set the OKTA_API_TOKEN env variable to a valid token
+## Get in touch
 
-### Plugin Configuration
-Do to an open issue w/the okta provider you need to manually download the okta plugin and put it in your .terraform/plugins directory:
-
-    $ wget https://github.com/articulate/terraform-provider-okta/releases/download/v3.0.38/terraform-provider-okta-darwin-amd64.zip
-    $ unzip terraform-provider-okta-darwin-amd64.zip
-    $ mv terraform-provider-okta_v3.0.38_x4 .terraform/plugins/darwin_amd64/
-
+Please reach out to info@symops.io with any questions on these modules or help getting them running.

@@ -19,5 +19,3 @@ variable "aws_role_name" {
   description = "Name of the AWS Role users will be able to log in with"
   default     = "ExampleOktaIam"
 }
-
-
