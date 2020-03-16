@@ -67,3 +67,7 @@ If you want a quick way to try Session Manager out, the [terraform-okta-ssm-modu
 Disney Streaming released [SSM Helpers](https://github.com/disneystreaming/ssm-helpers), which includes a command-line wrapper for SSH access with lots of extra features.
 
 Hope you learned something! I'd love to learn how you're using Session Manager or what other features/integrations you'd like to see us explore. There are additional Session Manager features like port forwarding that I plan to write about soon. Please send me a Twitter DM ([@firstmorecoffee](https://twitter.com/firstmorecoffee)) or email ([jon@symops.io](mailto:jon@symops.io)) with your feedback.
+
+## About Sym
+
+Sym Access enables just-in-time access to your cloud infrastructure with workflows that developers will love and ops teams can rely on. Automate access and provide ops teams visibility and reports for easy audits.
