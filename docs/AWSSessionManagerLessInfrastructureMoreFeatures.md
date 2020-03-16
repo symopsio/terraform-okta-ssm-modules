@@ -35,7 +35,7 @@ You can take advantage of conditional IAM policies to partition access to your i
         "Resource": "arn:aws:ec2:*:*:instance/*",
         "Condition": {
             "StringLike": {
-                "ssm:resourceTag/Deparment": "Analytics"
+                "ssm:resourceTag/Department": "Analytics"
             }
         }
     }
