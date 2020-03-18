@@ -1,5 +1,5 @@
 variable "aws_role_name" {
-  description = "Name of the AWS Role users will be able to log in with"
+  description = "IAM role name users will be able to log in with"
   default     = "SSMDemo"
 }
 
@@ -16,18 +16,23 @@ variable "okta_org_name" {
   description = "Okta Org Name (like dev-12345678)"
 }
 
-variable "okta_user_first_name" {
-  description = "First name of the Okta user to create"
-  default     = "ExampleFirst"
-}
-
-variable "okta_user_last_name" {
-  description = "Last name of the Okta user to create"
-  default     = "ExampleLast"
+variable "okta_provider_name" {
+  description = "Name of the AWS okta provider"
+  default     = "ssm-demo-okta-provider"
 }
 
 variable "okta_user_email" {
   description = "Email of the Okta user to create"
+}
+
+variable "okta_user_first_name" {
+  description = "First name of the Okta user to create"
+  default     = "EndToEndFirst"
+}
+
+variable "okta_user_last_name" {
+  description = "Last name of the Okta user to create"
+  default     = "EndToEndLast"
 }
 
 variable "region" {

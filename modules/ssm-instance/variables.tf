@@ -3,11 +3,11 @@ variable "instance_name" {
   default     = "ssm-instance"
 }
 
-variable "subnet_id" {
-  description = "The subnet_id to put the demo instance in"
+variable "instance_role" {
+  description = "The name of the IAM role to create"
+  default     = "SSMInstance"
 }
 
-variable "user_data" {
-  description = "Optional user data for instance bootstrap"
-  default     = ""
+variable "subnet_id" {
+  description = "The subnet_id to put the demo instance in"
 }

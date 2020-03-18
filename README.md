@@ -4,22 +4,40 @@ Terraform modules that help you explore Okta and AWS Session Manager integration
 
 ## About session manager
 
-For the details on what makes Session Manager so cool, check out [AWS Session Manager: less infrastructure, more features](docs/AWSSessionManagerLessInfrastructureMoreFeatures.md).
+For the details on what makes Session Manager so cool, check out:
 
-## End to end example
+* [AWS Session Manager: less infrastructure, more features](docs/AWSSessionManagerLessInfrastructureMoreFeatures.md)
+* [AWS Session Manager: low infrastructure SSH tunneling](docs/AWSSessionManagerLowInfrastructureSSHTunneling.md)
 
-The `examples` folder includes an end-to-end configuration for people that want to spin something up quickly. The end-to-end example will provision:
+## Examples
+
+The [examples](examples) folder includes end-to-end configurations for people that want to spin something up quickly.
+
+### okta-ssm
+
+You'll need a free Okta developer account and an AWS account where you have administrative privileges for the example to work.
+
+This example provisions:
 
 1. An Okta User that can log in to AWS with permissions to run Session Manager sessions.
 2. An EC2 instance that is set up with the right permissions for Session Manager and is tagged to let the Okta User access it.
 
-You'll need a free Okta developer account and an AWS account where you have administrative privileges for the example to work.
+### rds-tunnel
+
+You'll need an AWS account where you have administrative privileges for the example to work. You can use [bin/ec2-tunnel](bin/ec2-tunnel) to tunnel to the database once things are provisioned.
+
+This example provisions:
+
+1. A non-public RDS free tier eligible database
+2. A bastion EC2 instance that enables Session Manager based SSH tunneling to the database
+
 
 ## About the modules
 
-* `ssm_instance`: Defines an EC2 instance that can be accessed with Session Manager
-* `cwagent`: Configures the CloudWatch Logs agent on an EC2 instance to enable logging of Session Manager sessions
-* `okta-iam`: Enable federated login to AWS via Okta groups
+* [ssm-instance](modules/ssm-instance): Defines an EC2 instance that can be accessed with Session Manager
+* [cwagent](modules/cwagent): Configures the CloudWatch Logs agent on an EC2 instance to enable logging of Session Manager sessions
+* [okta-iam](modules/okta-iam): Enable federated login to AWS via Okta groups
+* [rds-demo](modules/rds-demo): A free tier eligible RDS database for demoing SSH tunneling
 
 ## Get in touch
 

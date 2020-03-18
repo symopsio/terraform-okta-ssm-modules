@@ -23,20 +23,23 @@ module "ssm_instance" {
 }
 
 module "okta_iam" {
-  source        = "../../modules/okta-iam"
-  okta_app_name = var.okta_app_name
-  aws_role_name = var.aws_role_name
+  source              = "../../modules/okta-iam"
+  okta_app_name       = var.okta_app_name
+  okta_provider_name  = var.okta_provider_name
+  aws_role_names      = [ var.aws_role_name ]
 }
 
-# Attach the SSM access policy to the role that the Okta app logs in with
+# Attach the SSM access policy to the roles that the Okta app logs in with
 resource "aws_iam_role_policy_attachment" "user-policy-attach" {
-  role       = module.okta_iam.aws_role_name
+  depends_on = [ module.okta_iam ]
+  role       = var.aws_role_name
   policy_arn = module.ssm_instance.user_policy_arn
 }
 
-# Give the Okta role readonly access so we can go to the console with it
+# Give the Okta roles readonly access so we can go to the console with it
 resource "aws_iam_role_policy_attachment" "role-attach" {
-  role       = module.okta_iam.aws_role_name
+  depends_on = [ module.okta_iam ]
+  role       = var.aws_role_name
   policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
 
@@ -47,5 +50,7 @@ resource "okta_user" "example_user" {
   login             = var.okta_user_email
   email             = var.okta_user_email
   status            = "ACTIVE"
-  group_memberships = [ module.okta_iam.okta_group_id ]
+  group_memberships = [
+    module.okta_iam.role_names_to_group_ids[var.aws_role_name]
+  ]
 }

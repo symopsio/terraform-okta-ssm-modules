@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+set -u
+
+display_usage() {
+  cat <<EOM
+    ##### ec2-rds-tunnel #####
+    SSH tunnel to RDS using EC2 Instance Connect.
+
+    Grab the instance id, az and rds endpoint from Terraform state.
+
+    Optional arguments:
+        -p | --profile          AWS profile name (defaults to none)
+        -r | --region           AWS region (defaults to us-east-1)
+        -h | --help             Show this message
+EOM
+  exit 2
+}
+
+aws_profile=''
+aws_region='--region us-east-1'
+
+while [[ $# > 0 ]]; do
+  key="$1"
+
+  case ${key} in
+    -p|--profile)
+      aws_profile="--profile $2"
+      shift
+      ;;
+    -r|--region)
+      aws_region="--region $2"
+      shift
+      ;;
+    -h|--help)
+      display_usage
+      exit 0
+      ;;
+    *)
+      display_usage
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+aws_cli="aws ${aws_profile} ${aws_region}"
+user="ec2-user"
+
+# Generate a keypair and send the pubkey to our EC2 instance, so that we can use
+# ssh port forwarding to our remote rds endpoint. If we were just using  aws ssm
+# start-session to connect we wouldn't need this step, but we can't configure
+# the rds endpoint without using ssh.
+echo -e 'y\n' | ssh-keygen -t rsa -f /tmp/temp -N '' >/dev/null 2>&1
+${aws_cli} ec2-instance-connect send-ssh-public-key \
+  --instance-id `terraform output instance_id` \
+  --availability-zone `terraform output instance_az` \
+  --instance-os-user ${user} \
+  --ssh-public-key file:///tmp/temp.pub
+ssh -i /tmp/temp \
+  -Nf -M \
+  -L 5432:`terraform output rds_endpoint` \
+  -o "UserKnownHostsFile=/dev/null" \
+  -o "StrictHostKeyChecking=no" \
+  -o ProxyCommand="${aws_cli} ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p" \
+  ${user}@`terraform output instance_id`

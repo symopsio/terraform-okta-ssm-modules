@@ -1,6 +1,4 @@
 #!/bin/bash
-echo "Installing collectd..."
-yum install -y ca-certificates collectd
 echo "Installing cloudwatch agent..."
 rpm -Uvh https://s3.amazonaws.com/amazoncloudwatch-agent/amazon_linux/amd64/latest/amazon-cloudwatch-agent.rpm
 echo "Configuring cloudwatch agent..."

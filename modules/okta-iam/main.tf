@@ -1,15 +1,10 @@
-# Defining the provider name to avoid a circular dependency between the okta
-# provider in AWS and the Okta App config
-locals {
-  provider_name = "okta"
-}
-
 data "aws_caller_identity" "current" {}
 
-# This group name needs to match the groupFilter regex defined in the okta app
+# The group names need to match the groupFilter regex defined in the okta app
 # The group name tells okta what role and account to go to.
-resource "okta_group" "group" {
-  name = "aws#${var.okta_app_name}#${var.aws_role_name}#${data.aws_caller_identity.current.account_id}"
+resource "okta_group" "groups" {
+  for_each = var.aws_role_names
+  name     = "aws#${var.okta_app_name}#${each.value}#${data.aws_caller_identity.current.account_id}"
 }
 
 resource "okta_app_saml" "aws" {
@@ -17,7 +12,10 @@ resource "okta_app_saml" "aws" {
   label             = var.okta_app_name
   key_years_valid   = 3
 
-  groups = [okta_group.group.id]
+  groups = [
+    for group in okta_group.groups:
+    group.id
+  ]
 
   app_settings_json = <<EOT
 {
@@ -26,7 +24,7 @@ resource "okta_app_saml" "aws" {
   "groupFilter": "^aws\\#\\S+\\#(?{{role}}[\\w\\-]+)\\#(?{{accountid}}\\d+)$",
   "joinAllRoles": false,
   "loginURL": "https://console.aws.amazon.com/ec2/home",
-  "roleValuePattern": "arn:aws:iam::$${accountid}:saml-provider/${local.provider_name},arn:aws:iam::$${accountid}:role/$${role}",
+  "roleValuePattern": "arn:aws:iam::$${accountid}:saml-provider/${var.okta_provider_name},arn:aws:iam::$${accountid}:role/$${role}",
   "sessionDuration": 3600,
   "useGroupMapping": true
 }
@@ -36,7 +34,7 @@ EOT
 # Create the AWS proivder for our SAML app, using the metadata we
 # created above
 resource "aws_iam_saml_provider" "okta" {
-  name                   = local.provider_name
+  name                   = var.okta_provider_name
   saml_metadata_document = okta_app_saml.aws.metadata
 }
 
@@ -64,10 +62,10 @@ data "aws_iam_policy_document" "okta" {
   }
 }
 
-# A role that trusts the SAML app.
+# Roles that trust the SAML app.
 # The role has no policies, those need to get created by consumers
-resource "aws_iam_role" "role" {
-  name               = var.aws_role_name
+resource "aws_iam_role" "roles" {
+  for_each           = var.aws_role_names
+  name               = each.value
   assume_role_policy = data.aws_iam_policy_document.okta.json
 }
-

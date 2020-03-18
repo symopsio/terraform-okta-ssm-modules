@@ -24,9 +24,6 @@
                         "InstanceType": "${aws:InstanceType}"
                 },
                 "metrics_collected": {
-                        "collectd": {
-                                "metrics_aggregation_interval": 60
-                        },
                         "cpu": {
                                 "measurement": [
                                         "cpu_usage_idle",

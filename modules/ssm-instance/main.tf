@@ -1,6 +1,6 @@
 module "cwagent" {
   source           = "../cwagent"
-  ssm_param_suffix = "ssm-demo"
+  ssm_param_suffix = var.instance_name
 }
 
 data "aws_subnet" "selected" {
@@ -43,12 +43,12 @@ resource "aws_instance" "ssm_instance" {
 }
 
 resource "aws_iam_role" "instance_role" {
-  name               = "SSMInstance"
+  name               = var.instance_role
   assume_role_policy = data.aws_iam_policy_document.ec2_assume_role.json
 }
 
 resource "aws_iam_instance_profile" "instance_profile" {
-  name = "SSMInstance"
+  name = var.instance_role
   role = aws_iam_role.instance_role.name
 }
 
@@ -85,7 +85,7 @@ data "aws_iam_policy_document" "ssm_user" {
 }
 
 resource "aws_iam_policy" "ssm_user_policy" {
-  name = "SSMUser"
+  name = "${var.instance_role}User"
   description = "Grants users SSM access to instances named ${var.instance_name}"
   policy = data.aws_iam_policy_document.ssm_user.json
 }
@@ -96,7 +96,7 @@ data "aws_ami" "amazon_linux" {
   filter {
     name = "name"
     values = [
-      "amzn-ami-hvm-*-x86_64-gp2",
+      "amzn2-ami-hvm-*-x86_64-gp2",
     ]
   }
 

@@ -12,7 +12,7 @@ provider "local" {
 }
 
 provider "okta" {
-  version   = "~> 3.0"
+  version   = "~> 3.1"
   org_name  = var.okta_org_name
   base_url  = "okta.com"
 }
@@ -20,8 +20,9 @@ provider "okta" {
 module "okta_iam" {
   source        = "../../modules/okta-iam"
 
-  okta_app_name = var.okta_app_name
-  aws_role_name = var.aws_role_name
+  okta_app_name       = var.okta_app_name
+  okta_provider_name  = var.okta_provider_name
+  aws_role_names      = var.aws_role_names
 }
 
 resource "okta_user" "example_user" {
@@ -30,10 +31,11 @@ resource "okta_user" "example_user" {
   login             = var.okta_user_email
   email             = var.okta_user_email
   status            = "ACTIVE"
-  group_memberships = [ module.okta_iam.okta_group_id ]
+  group_memberships = toset(values(module.okta_iam.role_names_to_group_ids))
 }
 
 resource "aws_iam_role_policy_attachment" "role-attach" {
-  role       = module.okta_iam.aws_role_name
+  for_each   = toset(keys(module.okta_iam.role_names_to_group_ids))
+  role       = each.key
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
