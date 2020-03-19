@@ -1,4 +1,4 @@
-# AWS Session Manager: low infrastructure SSH tunneling
+# AWS Session Manager Continued: SSH tunneling
 
 Hey I'm [Jon](https://www.jonbass.me/), CTO at Sym. First of all, I hope readers of this are safe and taking care of themselves and their families in these crazy times. If you are looking for some diversion, I'm following up here on [AWS Session Manager: less infrastructure, more features](AWSSessionManagerLessInfrastructureMoreFeatures.md). The post sparked a bunch of [great discussion on HN](https://news.ycombinator.com/item?id=22592875).
  
@@ -10,7 +10,7 @@ I'm going to focus here on how to use SSM for SSH tunnels, a hot topic from the 
 
 > SSH tunneling is a powerful but lesser known feature of SSH that alows you to to create a secure tunnel between a local host and a remote service. Let’s imagine I am running a web server for easy private file transfer between an EC2 instance and my laptop. ... When the tunnel is established, I can point my browser at http://localhost:9999 to connect to my private web server on port 80.
 
-## Low infrastructure SSH tunneling to RDS and other services
+## SSH tunneling to RDS and other services
 
 The AWS Documentation on port forwarding focuses on how to use tunneling to access a service running on the remote EC2 instance you're connecting to, but it doesn't make it clear how to use tunneling to access services that are running somewhere else in your AWS infrastructure (like RDS!).
 
@@ -32,7 +32,7 @@ Using SSM to tunnel to RDS or other backend services requires you to wrap your S
 
 You need to use SSH so that you can forward a port from a backend service that is not running on the instance using `ProxyCommand`, as ssm does not support this directly. With `ProxyCommand`, you end up using SSM just to establish connectivity to your instance. You are using your local SSH configuration to actually set up an interactive shell, so you need the standard authorized keys setup for things to work.
 
-This snippet from [bin/ec2-tunne](../bin/ec2-tunnel) shows how you tell SSM to just open a network connection and not to start a shell. Note the `--document AWS-StartSSHSession` parameter. This is different from the default `SSM-SessionManagerRunShell` document, which will actually start an interactive shell for you without going through SSH.
+This snippet from [bin/ec2-tunnel](../bin/ec2-tunnel) shows how you tell SSM to just open a network connection and not to start a shell. Note the `--document AWS-StartSSHSession` parameter. This is different from the default `SSM-SessionManagerRunShell` document, which will actually start an interactive shell for you without going through SSH.
 
     -o ProxyCommand="${aws_cli} ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p" \
 
