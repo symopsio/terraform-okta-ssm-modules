@@ -65,4 +65,4 @@ Thanks for all the stars and comments on this blog series. I think the next post
 
 ## About Sym
 
-Sym Access enables just-in-time access to your cloud infrastructure with workflows that developers will love and ops teams can rely on. Automate access and provide ops teams visibility and reports for easy audits.
+Sym Access enables just-in-time access to your cloud infrastructure with workflows that developers will love and ops teams can rely on. Automate access and provide ops teams visibility and reports for easy audits. [Sign up for our mailing list!](https://www.symops.io/)
