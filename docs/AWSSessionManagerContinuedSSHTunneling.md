@@ -30,9 +30,9 @@ Using SSM to tunnel to RDS or other backend services requires you to wrap your S
 
 ### Why do you need to use SSH?
 
-You need to use SSH so that you can forward a port from a backend service that is not running on the instance using `ProxyCommand`, as ssm does not support this directly. With `ProxyCommand`, you end up using SSM just to establish connectivity to your instance. You are using your local SSH configuration to actually set up an interactive shell, so you need the standard authorized keys setup for things to work.
+You need to use SSH so that you can forward a port from a backend service that is not running on the instance using `ProxyCommand`, as SSM does not support this directly. With `ProxyCommand`, you end up using SSM just to establish connectivity to your instance. You are using your local SSH configuration to actually set up an interactive shell, so you need the standard authorized keys setup for things to work.
 
-This snippet from [bin/ec2-tunnel](../bin/ec2-tunnel) shows how you tell SSM to just open a network connection and not to start a shell. Note the `--document AWS-StartSSHSession` parameter. This is different from the default `SSM-SessionManagerRunShell` document, which will actually start an interactive shell for you without going through SSH.
+This snippet from [bin/ec2-tunnel](../bin/ec2-tunnel) shows how you tell SSM to just open a network connection and not to start a shell. Note the `--document AWS-StartSSHSession` parameter. This is different from the default `SSM-SessionManagerRunShell` document, which starts an interactive shell for you without going through SSH.
 
     -o ProxyCommand="${aws_cli} ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p" \
 
