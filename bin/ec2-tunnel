@@ -49,6 +49,8 @@ done
 aws_cli="aws ${aws_profile} ${aws_region}"
 user="ec2-user"
 
+# Based on https://codelabs.transcend.io/codelabs/aws-ssh-ssm-rds/index.html
+
 # Generate a keypair and send the pubkey to our EC2 instance, so that we can use
 # ssh port forwarding to our remote rds endpoint. If we were just using  aws ssm
 # start-session to connect we wouldn't need this step, but we can't configure

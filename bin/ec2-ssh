@@ -49,6 +49,8 @@ done
 aws_cli="aws ${aws_profile} ${aws_region}"
 user="ec2-user"
 
+# Based on https://codelabs.transcend.io/codelabs/aws-ssh-ssm-rds/index.html
+
 # Generate a keypair and send the pubkey to our EC2 instance, so that we can use
 # ssh to access our instance instead of aws ssm start-session. This isn't
 # particularly useful without doing port forwarding (see the ec2-tunnel script),
