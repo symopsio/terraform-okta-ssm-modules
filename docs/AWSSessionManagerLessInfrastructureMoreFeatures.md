@@ -1,6 +1,6 @@
 # AWS Session Manager: less infrastructure, more features
 
-Hey I'm [Jon](https://www.jonbass.me/), CTO at Sym, and I've been building support for AWS Session Manager into our access management products. We're finding that many people still don't know about the features of Session Manager and how it can help them simplify their infrastructure, so I thought I'd share a bit of what we've learned.
+Hey I'm [Jon](https://www.jonbass.me/), CTO at [Sym](https://twitter.com/symops), and I've been building support for AWS Session Manager into our access management products. We're finding that many people still don't know about the features of Session Manager and how it can help them simplify their infrastructure, so I thought I'd share a bit of what we've learned.
 
 ## Less infrastructure
 
