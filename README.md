@@ -7,7 +7,7 @@ Terraform modules that help you explore Okta and AWS Session Manager integration
 For the details on what makes Session Manager so cool, check out:
 
 * [AWS Session Manager: less infrastructure, more features](docs/AWSSessionManagerLessInfrastructureMoreFeatures.md)
-* [AWS Session Manager Continued: SSH tunneling](docs/AWSSessionManagerContinuedSSHTunneling.md)
+* [AWS Session Manager: SSH tunnels with less user management](docs/AWSSessionManagerSSHTunnelsWithLessUserManagement.md)
 
 ## Examples
 

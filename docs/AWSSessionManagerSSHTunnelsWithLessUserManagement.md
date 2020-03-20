@@ -1,4 +1,4 @@
-# AWS Session Manager Continued: SSH tunneling
+# AWS Session Manager: SSH tunnels with less user management
 
 Hey I'm [Jon](https://www.jonbass.me/), CTO at Sym. First of all, I hope readers of this are safe and taking care of themselves and their families in these crazy times. If you are looking for some diversion, I'm following up here on [AWS Session Manager: less infrastructure, more features](AWSSessionManagerLessInfrastructureMoreFeatures.md). The post sparked a bunch of [great discussion on HN](https://news.ycombinator.com/item?id=22592875).
  
@@ -65,4 +65,4 @@ Thanks for all the stars and comments on this blog series. I think the next post
 
 ## About Sym
 
-Sym Access enables just-in-time access to your cloud infrastructure with workflows that developers will love and ops teams can rely on. Automate access and provide ops teams visibility and reports for easy audits. [Sign up for our mailing list!](https://www.symops.io/)
+Sym Access enables just-in-time access to your cloud infrastructure with workflows that developers will love and ops teams can rely on. Automate access and provide ops teams visibility and reports for easy audits. [Subscribe to our mailing list!](https://symops.io/subscribe)
