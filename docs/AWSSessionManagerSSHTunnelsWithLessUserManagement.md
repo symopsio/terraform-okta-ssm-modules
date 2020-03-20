@@ -1,6 +1,6 @@
 # AWS Session Manager: SSH tunnels with less user management
 
-Hey I'm [Jon](https://www.jonbass.me/), CTO at Sym. First of all, I hope readers of this are safe and taking care of themselves and their families in these crazy times. If you are looking for some diversion, I'm following up here on [AWS Session Manager: less infrastructure, more features](AWSSessionManagerLessInfrastructureMoreFeatures.md). The post sparked a bunch of [great discussion on HN](https://news.ycombinator.com/item?id=22592875).
+Hey I'm [Jon](https://www.jonbass.me/), CTO at [Sym](https://twitter.com/symops). First of all, I hope readers of this are safe and taking care of themselves and their families in these crazy times. If you are looking for some diversion, I'm following up here on [AWS Session Manager: less infrastructure, more features](AWSSessionManagerLessInfrastructureMoreFeatures.md). The post sparked a bunch of [great discussion on HN](https://news.ycombinator.com/item?id=22592875).
  
 I'm going to focus here on how to use SSM for SSH tunnels, a hot topic from the HN thread. There's some great prior art on this so will be linking to that and adding additional commentary on what you can do, and what the limitations are.
 
