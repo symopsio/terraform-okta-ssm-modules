@@ -10,21 +10,27 @@ data "aws_subnet" "selected" {
 # Create a security group with no ingress rules
 resource "aws_security_group" "sg" {
   vpc_id = data.aws_subnet.selected.vpc_id
-  egress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  egress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
   tags = {
-    Name = "ssm-instance"
+    Name = var.instance_name
   }
+}
+
+resource "aws_security_group_rule" "http_egress" {
+  type                     = "egress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.sg.id
+  cidr_blocks              = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "https_egress" {
+  type                     = "egress"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.sg.id
+  cidr_blocks              = ["0.0.0.0/0"]
 }
 
 # Create an instance that we can get into with session manager
