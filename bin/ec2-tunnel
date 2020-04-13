@@ -6,7 +6,7 @@ set -u
 
 display_usage() {
   cat <<EOM
-    ##### ec2-rds-tunnel #####
+    ##### ec2-tunnel #####
     SSH tunnel to RDS using EC2 Instance Connect.
 
     Grab the instance id, az and rds endpoint from Terraform state.
