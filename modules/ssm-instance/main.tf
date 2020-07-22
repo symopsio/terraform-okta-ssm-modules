@@ -44,7 +44,8 @@ resource "aws_instance" "ssm_instance" {
   vpc_security_group_ids = [aws_security_group.sg.id]
 
   tags = {
-    Name = var.instance_name
+    Name = var.instance_name,
+    Environment = "staging"
   }
 }
 
@@ -76,12 +77,31 @@ data "aws_iam_policy_document" "ssm_user" {
     statement {
       effect = "Allow"
       actions = [ "ssm:StartSession" ]
-      resources = [ "arn:aws:ec2:*:*:instance/*" ]
+      resources = [
+        "arn:aws:ec2:*:*:instance/*",
+      ]
       condition {
         test = "StringLike"
-        variable = "ssm:resourceTag/Name"
-        values = [ var.instance_name ]
+        variable = "ssm:resourceTag/Environment"
+        values = [ "staging" ]
       }
+    }
+    statement {
+      effect = "Allow"
+      actions = [ "ssm:StartSession" ]
+      resources = [
+        "arn:aws:ssm:*:*:document/AWS-StartSSHSession"
+      ]
+    }
+    statement {
+      effect = "Allow"
+      actions = [
+        "ssm:DescribeSessions",
+        "ssm:GetConnectionStatus",
+        "ssm:DescribeInstanceProperties",
+        "ec2:DescribeInstances"
+      ]
+      resources = [ "*" ]
     }
     statement {
       effect = "Allow"
