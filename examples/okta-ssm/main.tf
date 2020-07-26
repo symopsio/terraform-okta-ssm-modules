@@ -17,6 +17,12 @@ provider "okta" {
   base_url  = "okta.com"
 }
 
+module "ssm_user" {
+  source = "../../modules/ssm-user"
+
+  policy_name = var.aws_role_name
+}
+
 module "ssm_instance" {
   source    = "../../modules/ssm-instance"
   subnet_id = var.aws_subnet_id
@@ -33,7 +39,7 @@ module "okta_iam" {
 resource "aws_iam_role_policy_attachment" "user-policy-attach" {
   depends_on = [ module.okta_iam ]
   role       = var.aws_role_name
-  policy_arn = module.ssm_instance.user_policy_arn
+  policy_arn = module.ssm_user.policy_arn
 }
 
 # Give the Okta roles readonly access so we can go to the console with it

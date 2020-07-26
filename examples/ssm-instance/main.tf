@@ -11,6 +11,12 @@ provider "local" {
   version = "~> 1.0"
 }
 
+module "ssm_user" {
+  source = "../../modules/ssm-user"
+
+  policy_name = "SSMUser"
+}
+
 module "ssm_instance" {
   source = "../../modules/ssm-instance"
 

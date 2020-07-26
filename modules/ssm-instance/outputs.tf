@@ -3,11 +3,6 @@ output "instance_role_name" {
   value       = aws_iam_role.instance_role.name
 }
 
-output "user_policy_arn" {
-  description = "The ARN of the policy that grants users access to the instance"
-  value       = aws_iam_policy.ssm_user_policy.arn
-}
-
 output "instance_id" {
   description = "The id of the instance"
   value       = aws_instance.ssm_instance.id
