@@ -39,6 +39,6 @@ data "aws_iam_policy_document" "ssm_user" {
 
 resource "aws_iam_policy" "ssm_user_policy" {
   name = var.policy_name
-  description = "Grants users SSM access instances tagged with ${var.tag_key}:${var.tag_value}"
+  description = "Grants users SSM access to instances tagged with ${var.tag_key}:${var.tag_value}"
   policy = data.aws_iam_policy_document.ssm_user.json
 }
