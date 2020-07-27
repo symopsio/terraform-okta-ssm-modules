@@ -23,6 +23,11 @@ module "ssm_user" {
   policy_name = var.aws_role_name
 }
 
+module "ssm_preferences" {
+  source = "../../modules/ssm-preferences"
+
+}
+
 module "ssm_instance" {
   source    = "../../modules/ssm-instance"
   subnet_id = var.aws_subnet_id
