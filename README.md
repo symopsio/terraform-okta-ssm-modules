@@ -35,7 +35,7 @@ This example provisions:
 ## About the modules
 
 * [ssm-instance](modules/ssm-instance): Defines an EC2 instance that can be accessed with Session Manager
-* [ssm-user](modules/ssm-user): Defines a user policy that allows access to instances in a given environment tag
+* [ssm-user](modules/ssm-user): Defines a user policy that allows access to instances in a given tag
 * [cwagent](modules/cwagent): Configures the CloudWatch Logs agent on an EC2 instance to enable logging of Session Manager sessions
 * [okta-iam](modules/okta-iam): Enable federated login to AWS via Okta groups
 * [rds-demo](modules/rds-demo): A free tier eligible RDS database for demoing SSH tunneling
