@@ -38,3 +38,9 @@ variable "okta_user_last_name" {
 variable "region" {
   default = "us-east-1"
 }
+
+variable "run_as_user" {
+  description = "The OS user to log in as if run_as is enabled"
+  default     = "ubuntu"
+}
+

@@ -24,8 +24,8 @@ module "ssm_user" {
 }
 
 module "ssm_preferences" {
-  source = "../../modules/ssm-preferences"
-
+  source      = "../../modules/ssm-preferences"
+  run_as_user = var.run_as_user
 }
 
 module "ssm_instance" {
