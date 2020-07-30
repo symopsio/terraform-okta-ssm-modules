@@ -17,20 +17,21 @@ provider "okta" {
   base_url  = "okta.com"
 }
 
-module "ssm_user" {
-  source = "../../modules/ssm-user"
-
-  policy_name = var.aws_role_name
-}
-
 module "ssm_preferences" {
   source      = "../../modules/ssm-preferences"
   run_as_user = var.run_as_user
 }
 
+module "ssm_user" {
+  source              = "../../modules/ssm-user"
+  policy_name         = var.aws_role_name
+  session_kms_key_arn = module.ssm_preferences.session_kms_key_arn
+}
+
 module "ssm_instance" {
-  source    = "../../modules/ssm-instance"
-  subnet_id = var.aws_subnet_id
+  source              = "../../modules/ssm-instance"
+  session_kms_key_arn = module.ssm_preferences.session_kms_key_arn
+  subnet_id           = var.aws_subnet_id
 }
 
 module "okta_iam" {

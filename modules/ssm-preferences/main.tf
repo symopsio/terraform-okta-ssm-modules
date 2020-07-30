@@ -10,6 +10,7 @@ resource "aws_ssm_document" "regional_settings" {
     "inputs": {
       "cloudWatchLogGroupName": "${aws_cloudwatch_log_group.logs.name}",
       "cloudWatchEncryptionEnabled": true,
+      "kmsKeyId": "${aws_kms_key.session_key.key_id}",
       "runAsEnabled": ${var.run_as_enabled},
       "runAsDefaultUser": "${var.run_as_user}"
     }

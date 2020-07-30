@@ -1,3 +1,7 @@
+variable "session_kms_key_arn" {
+  description = "The arn of the kms key used to encrypt sessions"
+}
+
 variable "tag_key" {
   description = "The tag key you want to filter access by"
   default     = "Environment"

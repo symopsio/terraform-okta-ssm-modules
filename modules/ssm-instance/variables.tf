@@ -8,6 +8,10 @@ variable "instance_role" {
   default     = "SSMInstance"
 }
 
+variable "session_kms_key_arn" {
+  description = "The arn of the kms key used to encrypt sessions"
+}
+
 variable "subnet_id" {
   description = "The subnet_id to put the demo instance in"
 }
