@@ -31,6 +31,7 @@ data "aws_iam_policy_document" "ssm_user" {
       effect = "Allow"
       actions = [
         "ssm:ListCommands",
+        "ssm:ListCommandInvocations",
         "ssm:DescribeSessions",
         "ssm:GetConnectionStatus",
         "ssm:DescribeInstanceProperties",
