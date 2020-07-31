@@ -10,6 +10,7 @@ resource "aws_ssm_document" "regional_settings" {
     "inputs": {
       "cloudWatchLogGroupName": "${aws_cloudwatch_log_group.logs.name}",
       "cloudWatchEncryptionEnabled": true,
+      "kmsKeyId": "${aws_kms_key.session_key.key_id}",
       "runAsEnabled": ${var.run_as_enabled},
       "runAsDefaultUser": "${var.run_as_user}"
     }
@@ -67,4 +68,23 @@ data "aws_iam_policy_document" "log_key_policy" {
 resource "aws_kms_key" "log_key" {
   description             = "KMS Key For SSM Log Encryption"
   policy                  = data.aws_iam_policy_document.log_key_policy.json
+}
+
+data "aws_iam_policy_document" "session_key_policy" {
+  statement {
+    effect = "Allow"
+    actions = [ "kms:*" ]
+    resources = [ "*" ]
+    principals {
+      type        = "AWS"
+      identifiers = [
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+      ]
+    }
+  }
+}
+
+resource "aws_kms_key" "session_key" {
+  description             = "KMS Key For SSM Sessions"
+  policy                  = data.aws_iam_policy_document.session_key_policy.json
 }

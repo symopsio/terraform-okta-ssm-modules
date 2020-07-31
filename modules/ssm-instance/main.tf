@@ -71,6 +71,24 @@ resource "aws_iam_role_policy_attachment" "cwagent-attach" {
   policy_arn = module.cwagent.instance_policy.arn
 }
 
+data "aws_iam_policy_document" "session_key_policy" {
+  statement {
+    effect = "Allow"
+    actions = [ "kms:Decrypt" ]
+    resources = [ var.session_kms_key_arn ]
+  }
+}
+
+resource "aws_iam_policy" "ssm_user_policy" {
+  description = "Enables KMS encryption of Session Manager Sessions"
+  policy = data.aws_iam_policy_document.session_key_policy.json
+}
+
+resource "aws_iam_role_policy_attachment" "kms-session-attach" {
+  role       = aws_iam_role.instance_role.name
+  policy_arn = aws_iam_policy.ssm_user_policy.arn
+}
+
 data "aws_ami" "amazon_linux" {
   most_recent = true
   owners = ["amazon"]
