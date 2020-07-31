@@ -3,7 +3,7 @@
 data "aws_iam_policy_document" "ssm_user" {
     statement {
       effect = "Allow"
-      actions = [ "ssm:StartSession" ]
+      actions = [ "ssm:StartSession", "ssm:SendCommand" ]
       resources = [
         "arn:aws:ec2:*:*:instance/*",
       ]
@@ -18,6 +18,13 @@ data "aws_iam_policy_document" "ssm_user" {
       actions = [ "ssm:StartSession" ]
       resources = [
         "arn:aws:ssm:*:*:document/AWS-StartSSHSession"
+      ]
+    }
+    statement {
+      effect = "Allow"
+      actions = [ "ssm:SendCommand" ]
+      resources = [
+        "arn:aws:ssm:*:*:document/AWS-RunShellScript"
       ]
     }
     statement {
